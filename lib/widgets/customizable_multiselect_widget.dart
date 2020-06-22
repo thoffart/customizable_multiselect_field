@@ -6,13 +6,15 @@ class CustomizableMultiselectWidget extends StatefulWidget {
   const CustomizableMultiselectWidget({
     Key key,
     @required this.dataSource,
-    this.disabled = false,
+    this.enable,
     this.enableSearchBar = false,
-    this.inputDecoration,
+    this.decoration,
     this.chipColor,
     this.chipShape,
     this.hintText,
     this.dialogTitle,
+    this.onChanged,
+    this.onFieldSubmitted,
   }) : super(key: key);
 
 /*   /// Title for the AlertDialog
@@ -34,13 +36,15 @@ class CustomizableMultiselectWidget extends StatefulWidget {
   final InputBorder border; */
 
   final List<DataSource> dataSource;
-  final bool disabled;
+  final bool enable;
   final bool enableSearchBar;
-  final InputDecoration inputDecoration;
+  final InputDecoration decoration;
   final Color chipColor;
   final ShapeBorder chipShape;
   final Text hintText;
   final Text dialogTitle;
+  final ValueChanged<List<List<dynamic>>> onChanged;
+  final ValueChanged<List<List<dynamic>>> onFieldSubmitted;
 
   @override
   _CustomizableMultiselectWidgetState createState() => _CustomizableMultiselectWidgetState();
@@ -72,17 +76,17 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => {
-        if(!widget.disabled) {
+        if(!widget.enable) {
 
         }
       },
       child: InputDecorator(
-        decoration: widget.inputDecoration ?? InputDecoration(
+        decoration: widget.decoration ?? InputDecoration(
           filled: false,
           errorMaxLines: 4,
         ),
         child:
-        (_checkIfAllDataSourceIsEmpty())
+        (!_checkIfAllDataSourceIsEmpty())
         ? Column(
           children: <Widget>[
             ...widget.dataSource.map((DataSource dataSource) => 
