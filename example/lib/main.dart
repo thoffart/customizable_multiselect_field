@@ -29,6 +29,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final fruitListValue = [
+    'test1',
+    'test2',
+  ];
+  final beefListValue = [1, 2, 3];
+  final List<int> sectorWithoutFoodListValue = [];
+  final vegetablesListValue = ['Broccoli'];
+  final noTitleListValue = ['No title'];
+  List<List<dynamic>> valueList;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,107 +48,124 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Form(
+          key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              CustomizableMultiselectField(
-                dataSourceList: [
-                  DataSource<String>(
-                    dataList: [
-                      {
-                        'label': 'label1',
-                        'value': 'test1',
-                      },
-                      {
-                        'label': 'label2',
-                        'value': 'test2',
-                      },
-                      {
-                        'label': 'label3',
-                        'value': 'test3',
-                      },
-                      {
-                        'label': 'label4',
-                        'value': 'test4',
-                      },
-                      {
-                        'label': 'label5',
-                        'value': 'test5',
-                      },
-                      {
-                        'label': 'label6',
-                        'value': 'test6',
-                      },
-                    ],
-                    options: DataSourceOptions(
-                        valueKey: 'value', labelKey: 'label', title: 'label1'),
-                    valueList: [
-                      'test1',
-                      'test2',
-                      'test3',
-                      'test4',
-                      'test5',
-                      'test6'
-                    ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CustomizableMultiselectField(
+                  customizableMultiselectWidgetOptions: CustomizableMultiselectWidgetOptions(
+                    hintText: Text('Please Select a value', style: TextStyle(color: Colors.grey)),
+                    decoration: InputDecoration(
+                      labelText: 'Multiselect Sample',
+                    ),
+                    chipShape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.red, width: 1),
+                      borderRadius: BorderRadius.circular(40.0),
+                    ),
                   ),
-                  DataSource(
-                    dataList: [
-                      {
-                        'number': 'number1',
-                        'value': 1,
-                      },
-                      {
-                        'number': 'number2',
-                        'value': 2,
-                      },
-                      {
-                        'number': 'number3',
-                        'value': 3,
-                      },
-                    ],
-                    options: DataSourceOptions(
-                        valueKey: 'value', labelKey: 'number', title: 'label2'),
-                    valueList: [1, 2, 3],
-                  ),
-                  DataSource<int>(
-                    dataList: [
-                      {
-                        'number': 1,
-                        'value': 1,
-                      },
-                      {
-                        'number': 2,
-                        'value': 2,
-                      },
-                      {
-                        'number': 3,
-                        'value': 3,
-                      },
-                    ],
-                    options: DataSourceOptions(
-                        valueKey: 'value',
-                        labelKey: 'number',
-                        title: 'number3'),
-                    valueList: [],
-                  ),
-                  DataSource<String>(
-                    dataList: [
-                      {
-                        'key': 'key1',
-                      },
-                      {
-                        'key': 'key2',
-                      },
-                      {
-                        'key': 'key3',
-                      },
-                    ],
-                    options: DataSourceOptions(
-                        valueKey: 'key', labelKey: 'key', title: 'number4'),
-                    valueList: ['key1'],
-                  ),
-                ],
-              )
+                  dataSourceList: [
+                    DataSource<String>(
+                      dataList: [
+                        {
+                          'label': 'lime',
+                          'value': 'test1',
+                        },
+                        {
+                          'label': 'apple',
+                          'value': 'test2',
+                        },
+                      ],
+                      valueList: fruitListValue,
+                      options: DataSourceOptions(valueKey: 'value', labelKey: 'label', title: Text('Fruits', style: TextStyle(color: Colors.red), textAlign: TextAlign.start,)),
+                    ),
+                    DataSource(
+                      dataList: [
+                        {
+                          'number': 'Chuck',
+                          'value': 1,
+                        },
+                        {
+                          'number': 'Rump Steak',
+                          'value': 2,
+                        },
+                        {
+                          'number': 'Neck Steak',
+                          'value': 3,
+                        },
+                      ],
+                      valueList: beefListValue,
+                      options: DataSourceOptions(valueKey: 'value', labelKey: 'number', title: Text('Beef', style: TextStyle(color: Colors.grey), textAlign: TextAlign.start,)),
+                    ),
+                    DataSource<int>(
+                      dataList: [
+                        {
+                          'number': 1,
+                          'value': 1,
+                        },
+                        {
+                          'number': 2,
+                          'value': 2,
+                        },
+                        {
+                          'number': 3,
+                          'value': 3,
+                        },
+                      ],
+                      valueList: sectorWithoutFoodListValue,
+                      options: DataSourceOptions(valueKey: 'value', labelKey: 'number', title: Text('Sectors Without Food', style: TextStyle(color: Colors.brown), textAlign: TextAlign.start,)),
+                    ),
+                    DataSource<String>(
+                      dataList: [
+                        {
+                          'key': 'Broccoli',
+                        },
+                        {
+                          'key': 'Cucumber',
+                        },
+                        {
+                          'key': 'Cauliflower',
+                        },
+                      ],
+                      options: DataSourceOptions(valueKey: 'key', labelKey: 'key', title: Text('Vegetables', style: TextStyle(color: Colors.green), textAlign: TextAlign.start,)),
+                      valueList: vegetablesListValue,
+                    ),
+                    DataSource<String>(
+                      dataList: [
+                        {
+                          'key': 'No title',
+                        },
+                      ],
+                      options: DataSourceOptions(valueKey: 'key', labelKey: 'key',),
+                      valueList: noTitleListValue,
+                    ),
+                  ],
+                  onChanged: ((List<List<dynamic>> value) => print(value)),
+                  onSaved: ((List<List<dynamic>> newValueList) {
+                    setState(() {
+                      valueList = newValueList;
+                    });
+                  }),
+                  validator: ((List<List<dynamic>> value) {
+                    if(value.every((element) => element.isEmpty))
+                      return 'Please Select a value!';
+                    return null;
+
+                  })
+                ),
+              ),
+              SizedBox(height: 16,),
+              RaisedButton(
+                onPressed: () {
+                  if(_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
+                  }
+                },
+                child: Text('Save'),
+              ),
+              SizedBox(height: 16),
+              Text(valueList.toString()),
             ],
           ),
         ),

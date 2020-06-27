@@ -11,7 +11,6 @@ class CustomizableMultiselectField extends FormField<List<List<dynamic>>> {
     FormFieldValidator<List<List<dynamic>>> validator,
     bool autovalidate = false,
     ValueChanged<List<List<dynamic>>> onChanged,
-    ValueChanged<List<List<dynamic>>> onFieldSubmitted,
     @required this.dataSourceList,
     this.customizableMultiselectDialogOptions = const CustomizableMultiselectDialogOptions(),
     this.customizableMultiselectWidgetOptions = const CustomizableMultiselectWidgetOptions(),
@@ -50,5 +49,6 @@ class _CustomizableMultiselectFieldState extends FormFieldState<List<List<dynami
 
   @override
   CustomizableMultiselectField get widget => super.widget as CustomizableMultiselectField;
+
 
 }

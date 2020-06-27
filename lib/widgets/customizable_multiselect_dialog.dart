@@ -57,7 +57,7 @@ class _CustomizableMultiselectDialogState<V>
   Widget _searchBar() => Padding(
     padding: EdgeInsets.all(16),
     child: TextField(
-      decoration: InputDecoration(
+      decoration: widget.customizableMultiselectDialogOptions.searchBarDecoration ?? InputDecoration(
         contentPadding: const EdgeInsets.all(8.0),
         prefixIcon: Icon(Icons.search),
         focusedBorder: new OutlineInputBorder(
@@ -72,7 +72,7 @@ class _CustomizableMultiselectDialogState<V>
             color: Colors.blue
           )
         ),
-        hintText: 'Pesquisar...',
+        hintText: 'Search...',
       ),
       style: TextStyle(
         fontSize: 16.0,
@@ -93,12 +93,24 @@ class _CustomizableMultiselectDialogState<V>
     )).toList()..removeWhere((value) => value == null);
     return Column(
       children: [
-        Text(dataSource.options.title),
+        (dataSource.options.title != null)
+         ? Padding(
+           padding: const EdgeInsets.all(16.0),
+           child: Row(
+             children: [
+               Expanded(child: dataSource.options.title),
+             ],
+           ),
+         )
+         : Divider(),
         (itemList.isNotEmpty)
         ? Column(
           children: itemList,
         )
-        : Container(child: Text('Nao ha itens')),
+        : Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(child: Text('no Itens found!')),
+        ),
       ],
     );
   }
@@ -128,7 +140,7 @@ class _CustomizableMultiselectDialogState<V>
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(widget.customizableMultiselectDialogOptions.title ?? ''),
-      contentPadding: EdgeInsets.only(top: 12.0),
+      contentPadding: EdgeInsets.all(0),
       content: Container(
         width: MediaQuery.of(context).size.width,
         child: Column(

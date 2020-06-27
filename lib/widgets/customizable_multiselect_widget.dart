@@ -2,6 +2,7 @@ import 'package:customizable_multiselect_flutter/models/customizable_multiselect
 import 'package:customizable_multiselect_flutter/models/customizable_multiselect_widget_options.dart';
 import 'package:customizable_multiselect_flutter/models/data_source.dart';
 import 'package:customizable_multiselect_flutter/widgets/customizable_multiselect_dialog.dart';
+import 'package:customizable_multiselect_flutter/utils/extensions/extended-iterable.dart';
 import 'package:flutter/material.dart';
 
 class CustomizableMultiselectWidget extends StatefulWidget {
@@ -28,7 +29,7 @@ class CustomizableMultiselectWidget extends StatefulWidget {
 
 class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectWidget> {
 
-  List<Widget> _buildListChip(DataSource dataSourceList) => dataSourceList.valueList
+  List<Widget> _buildListChip(DataSource dataSourceList, int index) => dataSourceList.valueList
     .map((value) => dataSourceList.dataList.singleWhere((data) => data[dataSourceList.options.valueKey] == value,orElse: () => null))
     .map((value) => (value != null)
       ? Chip(
@@ -43,16 +44,15 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
   .toList();
 
   bool _checkIfAllDataSourceIsEmpty() {
-    return widget.dataSourceList
-        .every((DataSource element) => element.dataList.isEmpty);
+    return widget.dataSourceList.every((DataSource element) => element.valueList.isEmpty);
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async => {
+      onTap: () async {
         if(widget.customizableMultiselectWidgetOptions.enable) {
-          await showDialog<List>(
+          final List newSelectedValues = await showDialog<List>(
             context: context,
             builder: (BuildContext context) {
               return CustomizableMultiselectDialog(
@@ -60,7 +60,10 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
                 customizableMultiselectDialogOptions: widget.customizableMultiselectDialogOptions,
               );
             },
-          )
+          );
+          if(newSelectedValues != null) {
+            widget.onChanged(newSelectedValues);
+          }
         }
       },
       child: InputDecorator(
@@ -68,20 +71,21 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
         child: (!_checkIfAllDataSourceIsEmpty())
             ? Column(
                 children: <Widget>[
-                  ...widget.dataSourceList.map(
-                    (DataSource dataSourceList) => (dataSourceList.valueList.isNotEmpty)
+                  ...widget.dataSourceList.mapIndex(
+                    (DataSource dataSourceList, int index) => (dataSourceList.valueList.isNotEmpty)
                     ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          if (dataSourceList.options.title != null)
-                            Row(
+                          (dataSourceList.options.title != null)
+                            ? Row(
                               children: [
                                 Expanded(
-                                    child: Text(dataSourceList.options.title,
-                                        textAlign: TextAlign.start)),
+                                  child: dataSourceList.options.title
+                                ),
                               ],
-                            ),
+                            )
+                            : Divider(),
                           SizedBox(height: 4),
                           Padding(
                             padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
@@ -91,7 +95,7 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
                                   child: Wrap(
                                   spacing: 8.0,
                                   children:
-                                      _buildListChip(dataSourceList),
+                                      _buildListChip(dataSourceList, index),
                                 ))
                               ],
                             ),
@@ -103,7 +107,10 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
                   )
                 ],
               )
-            : widget.customizableMultiselectWidgetOptions.hintText,
+            : Padding(
+              padding: EdgeInsets.only(left: 8, right: 8, top: 8),
+              child: widget.customizableMultiselectWidgetOptions.hintText ?? Text('Please select a value'),
+            ),
       ),
     );
   }
