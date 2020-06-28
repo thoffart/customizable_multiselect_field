@@ -1,0 +1,31 @@
+# TODO: Verify why flutter test and flutter analyze only breaks on github-CI
+#name: Customizable Multiselect CI
+#
+#on: [push]
+#
+#jobs:
+#  build:
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#    - uses: actions/checkout@v2
+#    - name: Setup Java JDK
+#      uses: actions/setup-java@v1.3.0
+#      with:
+#        java-version: '12.x'
+#    - uses: subosito/flutter-action@v1
+#      id: setting-up-flutter
+#      with:
+#        channel: 'stable'
+#    - name: Getting Flutter Packages
+#      id: getting-packages
+#      run: flutter pub get
+#  #  TODO: Verify why this step breaks only on CI
+#  #  - name: Analyzing code
+#  #    id: analyizing-code
+#  #    run: flutter analyze
+#    - name: Running tests
+#      id: testing-code
+#      run: flutter test
+#
