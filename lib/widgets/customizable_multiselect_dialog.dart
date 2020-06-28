@@ -139,7 +139,7 @@ class _CustomizableMultiselectDialogState<V>
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.customizableMultiselectDialogOptions.title ?? ''),
+      title: widget.customizableMultiselectDialogOptions.title ?? Text(''),
       contentPadding: EdgeInsets.all(0),
       content: Container(
         width: MediaQuery.of(context).size.width,

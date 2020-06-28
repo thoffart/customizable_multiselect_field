@@ -2,7 +2,6 @@ import 'package:customizable_multiselect_field/models/customizable_multiselect_d
 import 'package:customizable_multiselect_field/models/customizable_multiselect_widget_options.dart';
 import 'package:customizable_multiselect_field/models/data_source.dart';
 import 'package:customizable_multiselect_field/widgets/customizable_multiselect_dialog.dart';
-import 'package:customizable_multiselect_field/utils/extensions/extended-iterable.dart';
 import 'package:flutter/material.dart';
 
 class CustomizableMultiselectWidget extends StatefulWidget {
@@ -27,7 +26,7 @@ class CustomizableMultiselectWidget extends StatefulWidget {
 
 class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectWidget> {
 
-  List<Widget> _buildListChip(DataSource dataSource, int index) => dataSource.valueList
+  List<Widget> _buildListChip(DataSource dataSource) => dataSource.valueList
     .map((value) => dataSource.dataList.singleWhere((data) => data[dataSource.options.valueKey] == value,orElse: () => null))
     .map((value) => (value != null)
       ? Chip(
@@ -69,8 +68,8 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
         child: (!_checkIfAllDataSourceIsEmpty())
             ? Column(
                 children: <Widget>[
-                  ...widget.dataSourceList.mapIndex(
-                    (DataSource dataSource, int index) => (dataSource.valueList.isNotEmpty)
+                  ...widget.dataSourceList.map(
+                    (DataSource dataSource) => (dataSource.valueList.isNotEmpty)
                     ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -93,7 +92,7 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
                                   child: Wrap(
                                   spacing: 8.0,
                                   children:
-                                      _buildListChip(dataSource, index),
+                                      _buildListChip(dataSource),
                                 ))
                               ],
                             ),
