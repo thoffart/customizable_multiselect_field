@@ -1,4 +1,4 @@
-library customizable_multiselect_flutter;
+library customizable_multiselect_field;
 
 export './widgets/customizable_multiselect_widget.dart';
 export './widgets/customizable_multiselect_field.dart';

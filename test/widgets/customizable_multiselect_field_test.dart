@@ -1,4 +1,4 @@
-import 'package:customizable_multiselect_flutter/customizable_multiselect_flutter.dart';
+import 'package:customizable_multiselect_field/customizable_multiselect_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

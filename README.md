@@ -1,4 +1,4 @@
-# customizable_multiselect_flutter
+# customizable_multiselect_field
 
 A new Flutter package project.
 

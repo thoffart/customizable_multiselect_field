@@ -1,4 +1,4 @@
-import 'package:customizable_multiselect_flutter/models/data_source_options.dart';
+import 'package:customizable_multiselect_field/models/data_source_options.dart';
 import 'package:flutter/material.dart';
 
 

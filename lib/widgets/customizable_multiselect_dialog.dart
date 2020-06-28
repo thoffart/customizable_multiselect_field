@@ -1,6 +1,6 @@
-import 'package:customizable_multiselect_flutter/customizable_multiselect_flutter.dart';
-import 'package:customizable_multiselect_flutter/models/customizable_multiselect_dialog_options.dart';
-import 'package:customizable_multiselect_flutter/utils/extensions/extended-iterable.dart';
+import 'package:customizable_multiselect_field/customizable_multiselect_flutter.dart';
+import 'package:customizable_multiselect_field/models/customizable_multiselect_dialog_options.dart';
+import 'package:customizable_multiselect_field/utils/extensions/extended-iterable.dart';
 import 'package:flutter/material.dart';
 
 class CustomizableMultiselectDialog<V> extends StatefulWidget {

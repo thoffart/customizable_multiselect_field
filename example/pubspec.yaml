@@ -21,7 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  customizable_multiselect_flutter:
+  customizable_multiselect_field:
     path: ../
   flutter:
     sdk: flutter

@@ -1,6 +1,6 @@
-import 'package:customizable_multiselect_flutter/customizable_multiselect_flutter.dart';
-import 'package:customizable_multiselect_flutter/models/customizable_multiselect_dialog_options.dart';
-import 'package:customizable_multiselect_flutter/models/customizable_multiselect_widget_options.dart';
+import 'package:customizable_multiselect_field/customizable_multiselect_flutter.dart';
+import 'package:customizable_multiselect_field/models/customizable_multiselect_dialog_options.dart';
+import 'package:customizable_multiselect_field/models/customizable_multiselect_widget_options.dart';
 import 'package:flutter/material.dart';
 
 class CustomizableMultiselectField extends FormField<List<List<dynamic>>> {
