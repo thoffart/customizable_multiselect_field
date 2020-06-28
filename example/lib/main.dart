@@ -58,22 +58,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   customizableMultiselectWidgetOptions: CustomizableMultiselectWidgetOptions(
                     hintText: Text('Please Select a value', style: TextStyle(color: Colors.grey)),
                     decoration: InputDecoration(
-                      labelText: 'Multiselect Sample',
+                      labelText: 'Multiselect Sample teste',
                     ),
                     chipShape: RoundedRectangleBorder(
                       side: BorderSide(color: Colors.red, width: 1),
                       borderRadius: BorderRadius.circular(40.0),
                     ),
                   ),
+                  customizableMultiselectDialogOptions: CustomizableMultiselectDialogOptions(),
                   dataSourceList: [
                     DataSource<String>(
                       dataList: [
                         {
-                          'label': 'lime',
+                          'label': 'Lime',
                           'value': 'test1',
                         },
                         {
-                          'label': 'apple',
+                          'label': 'Apple',
                           'value': 'test2',
                         },
                       ],
@@ -128,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           'key': 'Cauliflower',
                         },
                       ],
-                      options: DataSourceOptions(valueKey: 'key', labelKey: 'key', title: Text('Vegetables', style: TextStyle(color: Colors.green), textAlign: TextAlign.start,)),
+                      options: DataSourceOptions(valueKey: 'key', labelKey: 'key', title: Text('Vegetables', style: TextStyle(color: Colors.green), textAlign: TextAlign.start)),
                       valueList: vegetablesListValue,
                     ),
                     DataSource<String>(

@@ -109,7 +109,7 @@ class _CustomizableMultiselectDialogState<V>
         )
         : Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(child: Text('no Itens found!')),
+          child: Container(child: dataSource.options.noItensFoundText ?? Text('no Itens found!')),
         ),
       ],
     );
