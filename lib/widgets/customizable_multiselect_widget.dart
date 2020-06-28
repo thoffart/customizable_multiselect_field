@@ -11,14 +11,12 @@ class CustomizableMultiselectWidget extends StatefulWidget {
     Key key,
     @required this.dataSourceList,
     this.onChanged,
-    this.onFieldSubmitted,
     @required this.customizableMultiselectDialogOptions,
     @required this.customizableMultiselectWidgetOptions,
   }) : super(key: key);
 
   final List<DataSource> dataSourceList;
   final ValueChanged<List<List<dynamic>>> onChanged;
-  final ValueChanged<List<List<dynamic>>> onFieldSubmitted;
   final CustomizableMultiselectDialogOptions customizableMultiselectDialogOptions;
   final CustomizableMultiselectWidgetOptions customizableMultiselectWidgetOptions;
 
@@ -29,11 +27,11 @@ class CustomizableMultiselectWidget extends StatefulWidget {
 
 class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectWidget> {
 
-  List<Widget> _buildListChip(DataSource dataSourceList, int index) => dataSourceList.valueList
-    .map((value) => dataSourceList.dataList.singleWhere((data) => data[dataSourceList.options.valueKey] == value,orElse: () => null))
+  List<Widget> _buildListChip(DataSource dataSource, int index) => dataSource.valueList
+    .map((value) => dataSource.dataList.singleWhere((data) => data[dataSource.options.valueKey] == value,orElse: () => null))
     .map((value) => (value != null)
       ? Chip(
-        label: Text(value[dataSourceList.options.labelKey].toString(), overflow: TextOverflow.ellipsis),
+        label: Text(value[dataSource.options.labelKey].toString(), overflow: TextOverflow.ellipsis),
         backgroundColor: widget.customizableMultiselectWidgetOptions.chipColor,
         shape: widget.customizableMultiselectWidgetOptions.chipShape ?? RoundedRectangleBorder(
           side: BorderSide(color: Colors.blue, width: 1),
@@ -72,16 +70,16 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
             ? Column(
                 children: <Widget>[
                   ...widget.dataSourceList.mapIndex(
-                    (DataSource dataSourceList, int index) => (dataSourceList.valueList.isNotEmpty)
+                    (DataSource dataSource, int index) => (dataSource.valueList.isNotEmpty)
                     ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          (dataSourceList.options.title != null)
+                          (dataSource.options.title != null)
                             ? Row(
                               children: [
                                 Expanded(
-                                  child: dataSourceList.options.title
+                                  child: dataSource.options.title
                                 ),
                               ],
                             )
@@ -95,7 +93,7 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
                                   child: Wrap(
                                   spacing: 8.0,
                                   children:
-                                      _buildListChip(dataSourceList, index),
+                                      _buildListChip(dataSource, index),
                                 ))
                               ],
                             ),
@@ -109,7 +107,7 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
               )
             : Padding(
               padding: EdgeInsets.only(left: 8, right: 8, top: 8),
-              child: widget.customizableMultiselectWidgetOptions.hintText ?? Text('Please select a value'),
+              child: widget.customizableMultiselectWidgetOptions.hintText ?? Text('Please Select a value', style: TextStyle(color: Colors.grey)),
             ),
       ),
     );
