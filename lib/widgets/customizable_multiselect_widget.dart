@@ -46,7 +46,7 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
   .toList();
 
   bool _checkIfAllDataSourceIsEmpty() {
-    return widget.dataSourceList.every((DataSource element) => element.valueList.isEmpty);
+    return widget.value.every((List value) => value.isEmpty);
   }
 
 

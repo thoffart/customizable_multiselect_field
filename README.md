@@ -15,7 +15,7 @@ A Flutter package that provides a highly customizable multiselect field.
 
 ```yaml
 dependencies:
-  customizable_multiselect_field: 0.0.4
+  customizable_multiselect_field: 0.0.5
 ```
 
 - Import in your code:
