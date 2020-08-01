@@ -30,10 +30,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final fruitListValue = [
-    'test1',
-    'test2',
-  ];
   final beefListValue = [1, 2, 3];
   final List<int> sectorWithoutFoodListValue = [];
   final vegetablesListValue = ['Broccoli'];
@@ -55,11 +51,11 @@ class _MyHomePageState extends State<MyHomePage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CustomizableMultiselectField(
+                  decoration: InputDecoration(
+                    labelText: 'Multiselect Sample teste',
+                  ),
                   customizableMultiselectWidgetOptions: CustomizableMultiselectWidgetOptions(
                     hintText: Text('Please Select a value', style: TextStyle(color: Colors.grey)),
-                    decoration: InputDecoration(
-                      labelText: 'Multiselect Sample teste',
-                    ),
                     chipShape: RoundedRectangleBorder(
                       side: BorderSide(color: Colors.red, width: 1),
                       borderRadius: BorderRadius.circular(40.0),
@@ -78,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           'value': 'test2',
                         },
                       ],
-                      valueList: fruitListValue,
+                      valueList: ['test1', 'test2'],
                       options: DataSourceOptions(valueKey: 'value', labelKey: 'label', title: Text('Fruits', style: TextStyle(color: Colors.red), textAlign: TextAlign.start,)),
                     ),
                     DataSource(

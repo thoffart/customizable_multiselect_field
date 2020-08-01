@@ -8,26 +8,26 @@ class CustomizableMultiselectDialog<V> extends StatefulWidget {
     Key key,
     @required this.dataSourceList,
     @required this.customizableMultiselectDialogOptions,
+    @required this.selectedValues, 
   }) : super(key: key);
 
   final List<DataSource> dataSourceList;
   final CustomizableMultiselectDialogOptions customizableMultiselectDialogOptions;
+  final List<List<V>> selectedValues;
 
   @override
   State<StatefulWidget> createState() => _CustomizableMultiselectDialogState<V>();
 
 }
 
-class _CustomizableMultiselectDialogState<V>
-    extends State<CustomizableMultiselectDialog<V>> {
-  var _selectedValues = List<List<V>>();
+class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultiselectDialog<V>> {
+  
+  List<List<V>>_selectedValues;
   String _filterText;
 
   void initState() {
     super.initState();
-    _selectedValues = widget.dataSourceList
-        .map((DataSource dataSource) => dataSource.valueList)
-        .toList();
+    _selectedValues = widget.selectedValues;
   }
 
   void _onItemCheckedChange(V itemValue, bool checked, int index) {

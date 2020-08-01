@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+
   final fruitListValue = [
     'test1',
     'test2',
   ];
+
   testWidgets('CustomizableMultiselectField Test', (WidgetTester tester) async {
     final customizableMultiselectWidgetOptions = CustomizableMultiselectWidgetOptions(
-      decoration: InputDecoration(
-        labelText: 'Multiselect Sample',
-      ),
       chipShape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.red, width: 1),
         borderRadius: BorderRadius.circular(40.0),
@@ -45,6 +44,9 @@ void main() {
               customizableMultiselectWidgetOptions: customizableMultiselectWidgetOptions,
               customizableMultiselectDialogOptions: customizableMultiselectDialogOptions,
               dataSourceList: dataSourceList,
+              decoration: InputDecoration(
+                labelText: 'Multiselect Sample',
+              ),
           ),
         ),
       )

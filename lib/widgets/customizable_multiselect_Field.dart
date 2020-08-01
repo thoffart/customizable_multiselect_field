@@ -56,6 +56,7 @@ class CustomizableMultiselectField extends FormField<List<List<dynamic>>> {
     FormFieldValidator<List<List<dynamic>>> validator,
     bool autovalidate = false,
     ValueChanged<List<List<dynamic>>> onChanged,
+    InputDecoration decoration,
     @required this.dataSourceList,
     this.customizableMultiselectDialogOptions = const CustomizableMultiselectDialogOptions(),
     this.customizableMultiselectWidgetOptions = const CustomizableMultiselectWidgetOptions(),
@@ -67,6 +68,8 @@ class CustomizableMultiselectField extends FormField<List<List<dynamic>>> {
     autovalidate: autovalidate,
     enabled: customizableMultiselectWidgetOptions.enable,
     builder: (FormFieldState<List<List<dynamic>>> field) {
+      final InputDecoration effectiveDecoration = (decoration ?? const InputDecoration())
+        .applyDefaults(Theme.of(field.context).inputDecorationTheme);
       void onChangedHandler(List<List<dynamic>> value) {
         if (onChanged != null) {
           onChanged(value);
@@ -78,6 +81,8 @@ class CustomizableMultiselectField extends FormField<List<List<dynamic>>> {
         onChanged: onChangedHandler,
         customizableMultiselectDialogOptions: customizableMultiselectDialogOptions,
         customizableMultiselectWidgetOptions: customizableMultiselectWidgetOptions,
+        decoration: effectiveDecoration.copyWith(errorText: field.errorText),
+        value: field.value,
       );
     },
   );
