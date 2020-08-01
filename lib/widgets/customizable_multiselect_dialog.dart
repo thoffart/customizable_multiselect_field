@@ -22,12 +22,14 @@ class CustomizableMultiselectDialog<V> extends StatefulWidget {
 
 class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultiselectDialog<V>> {
   
-  List<List<V>>_selectedValues;
+  List<List<V>>_selectedValues = List<List<V>>();
   String _filterText;
 
   void initState() {
     super.initState();
-    _selectedValues = widget.selectedValues;
+    widget.selectedValues.forEach((element) {
+      _selectedValues.add(List.from(element));
+    });
   }
 
   void _onItemCheckedChange(V itemValue, bool checked, int index) {

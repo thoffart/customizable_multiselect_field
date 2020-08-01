@@ -1,6 +1,6 @@
 name: customizable_multiselect_field
 description: A Flutter package that provides a highly customizable multiselect field.
-version: 0.0.3
+version: 0.0.4
 repository: https://github.com/thoffart/customizable_multiselect_field
 homepage: https://github.com/thoffart/customizable_multiselect_field
 
