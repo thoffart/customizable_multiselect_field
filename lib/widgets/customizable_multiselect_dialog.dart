@@ -32,9 +32,9 @@ class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultisele
     });
   }
 
-  void _onItemCheckedChange(V itemValue, bool? checked, int index) {
+  void _onItemCheckedChange(V itemValue, bool checked, int index) {
     setState(() {
-      if (checked!) {
+      if (checked) {
         _selectedValues[index].add(itemValue);
       } else {
         _selectedValues[index].remove(itemValue);
@@ -86,13 +86,13 @@ class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultisele
   );
 
 
-  Widget _buildDataSourceTiles( DataSource dataSource, int dataSourceIndex, Widget? Function(Map<String, dynamic> value, String? labelKey, String? valueKey, int dataSourceIndex) builderTile) {
-    final itemList = dataSource.dataList.map((Map<String, dynamic> value) => builderTile(
+  Widget _buildDataSourceTiles( DataSource dataSource, int dataSourceIndex, Widget? Function(Map<String, dynamic> value, String labelKey, String valueKey, int dataSourceIndex) builderTile) {
+    final List<Widget> itemList = List.castFrom(dataSource.dataList.map((Map<String, dynamic> value) => builderTile(
       value,
       dataSource.options.labelKey,
       dataSource.options.valueKey,
       dataSourceIndex
-    )).toList()..removeWhere((value) => value == null);
+    )).toList()..removeWhere((value) => value == null));
     return Column(
       children: [
         (dataSource.options.title != null)
@@ -107,7 +107,7 @@ class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultisele
          : Divider(),
         (itemList.isNotEmpty)
         ? Column(
-          children: itemList as List<Widget>,
+          children: itemList,
         )
         : Padding(
           padding: const EdgeInsets.all(8.0),
@@ -117,23 +117,31 @@ class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultisele
     );
   }
 
-  Widget _buildItens(Map<String, dynamic> value, String? labelKey, String? valueKey, int dataSourceIndex) {
+  Widget _buildItens(Map<String, dynamic> value, String labelKey, String valueKey, int dataSourceIndex) {
     return CheckboxListTile(
-      value: _selectedValues[dataSourceIndex].contains(value[valueKey!]),
-      title: Text(value[labelKey!].toString()),
+      value: _selectedValues[dataSourceIndex].contains(value[valueKey]),
+      title: Text(value[labelKey].toString()),
       controlAffinity: ListTileControlAffinity.leading,
-      onChanged: (checked) => _onItemCheckedChange(value[valueKey], checked, dataSourceIndex),
+      onChanged: (checked) {
+          if(checked != null) {
+            _onItemCheckedChange(value[valueKey], checked, dataSourceIndex);
+          }
+        },
     );
   }
 
 
-  Widget? _buildItensWithFilter(Map<String, dynamic> value, String? labelKey, String? valueKey, int dataSourceIndex) {
-     return value[labelKey!].toString().toLowerCase().contains(_filterText.toLowerCase()) 
+  Widget? _buildItensWithFilter(Map<String, dynamic> value, String labelKey, String valueKey, int dataSourceIndex) {
+     return value[labelKey].toString().toLowerCase().contains(_filterText.toLowerCase()) 
      ? CheckboxListTile(
-        value: _selectedValues[dataSourceIndex].contains(value[valueKey!]),
+        value: _selectedValues[dataSourceIndex].contains(value[valueKey]),
         title: Text(value[labelKey].toString()),
         controlAffinity: ListTileControlAffinity.leading,
-        onChanged: (checked) => _onItemCheckedChange(value[valueKey], checked, dataSourceIndex),
+        onChanged: (checked) {
+          if(checked != null) {
+            _onItemCheckedChange(value[valueKey], checked, dataSourceIndex);
+          }
+        },
       )
      : null;
   }
