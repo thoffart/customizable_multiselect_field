@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CustomizableMultiselectWidgetOptions {
-
   const CustomizableMultiselectWidgetOptions({
     this.enable = true,
     this.chipColor = Colors.white,
@@ -17,8 +16,7 @@ class CustomizableMultiselectWidgetOptions {
 
   /// A [ShapeBorder] widget that will be the shape of the [Chip].
   final ShapeBorder? chipShape;
-  
+
   /// A [Text] widget that will appear if no value was selected.
   final Text? hintText;
-
 }

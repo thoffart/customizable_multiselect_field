@@ -47,9 +47,8 @@ import 'customizable_multiselect_widget.dart';
 /// ```
 ///
 /// {@end-tool}
-/// 
+///
 class CustomizableMultiselectField extends FormField<List<List<dynamic>>> {
-
   CustomizableMultiselectField({
     Key? key,
     FormFieldSetter<List<List<dynamic>>>? onSaved,
@@ -58,34 +57,43 @@ class CustomizableMultiselectField extends FormField<List<List<dynamic>>> {
     ValueChanged<List<List<dynamic>>>? onChanged,
     InputDecoration? decoration,
     required this.dataSourceList,
-    this.customizableMultiselectDialogOptions = const CustomizableMultiselectDialogOptions(),
-    this.customizableMultiselectWidgetOptions = const CustomizableMultiselectWidgetOptions(),
+    this.customizableMultiselectDialogOptions =
+        const CustomizableMultiselectDialogOptions(),
+    this.customizableMultiselectWidgetOptions =
+        const CustomizableMultiselectWidgetOptions(),
   }) : super(
-    key: key,
-    onSaved: onSaved,
-    validator: validator,
-    initialValue: dataSourceList.map((DataSource dataSource) => dataSource.valueList).toList(),
-    autovalidateMode: autovalidateMode,
-    enabled: customizableMultiselectWidgetOptions.enable,
-    builder: (FormFieldState<List<List<dynamic>>> field) {
-      final InputDecoration effectiveDecoration = (decoration ?? const InputDecoration())
-        .applyDefaults(Theme.of(field.context).inputDecorationTheme);
-      void onChangedHandler(List<List<dynamic>> value) {
-        if (onChanged != null) {
-          onChanged(value);
-        }
-        field.didChange(value);
-      }
-      return CustomizableMultiselectWidget(
-        dataSourceList: dataSourceList,
-        onChanged: onChangedHandler,
-        customizableMultiselectDialogOptions: customizableMultiselectDialogOptions,
-        customizableMultiselectWidgetOptions: customizableMultiselectWidgetOptions,
-        decoration: effectiveDecoration.copyWith(errorText: field.errorText),
-        value: field.value,
-      );
-    },
-  );
+          key: key,
+          onSaved: onSaved,
+          validator: validator,
+          initialValue: dataSourceList
+              .map((DataSource dataSource) => dataSource.valueList)
+              .toList(),
+          autovalidateMode: autovalidateMode,
+          enabled: customizableMultiselectWidgetOptions.enable,
+          builder: (FormFieldState<List<List<dynamic>>> field) {
+            final InputDecoration effectiveDecoration = (decoration ??
+                    const InputDecoration())
+                .applyDefaults(Theme.of(field.context).inputDecorationTheme);
+            void onChangedHandler(List<List<dynamic>> value) {
+              if (onChanged != null) {
+                onChanged(value);
+              }
+              field.didChange(value);
+            }
+
+            return CustomizableMultiselectWidget(
+              dataSourceList: dataSourceList,
+              onChanged: onChangedHandler,
+              customizableMultiselectDialogOptions:
+                  customizableMultiselectDialogOptions,
+              customizableMultiselectWidgetOptions:
+                  customizableMultiselectWidgetOptions,
+              decoration:
+                  effectiveDecoration.copyWith(errorText: field.errorText),
+              value: field.value,
+            );
+          },
+        );
 
   /// The list that contains [DataSource] elements to show in the [CustomMultiselectField].
   ///
@@ -97,21 +105,23 @@ class CustomizableMultiselectField extends FormField<List<List<dynamic>>> {
   /// The options of the Multiselect dialog.
   ///
   /// If not provided it initiates with his default values.
-  final CustomizableMultiselectDialogOptions customizableMultiselectDialogOptions;
+  final CustomizableMultiselectDialogOptions
+      customizableMultiselectDialogOptions;
 
   /// The options of the Multiselect input.
   ///
   /// If not provided it initiates with his default values.
-  final CustomizableMultiselectWidgetOptions customizableMultiselectWidgetOptions;
+  final CustomizableMultiselectWidgetOptions
+      customizableMultiselectWidgetOptions;
 
   @override
-  _CustomizableMultiselectFieldState createState() => _CustomizableMultiselectFieldState();
+  _CustomizableMultiselectFieldState createState() =>
+      _CustomizableMultiselectFieldState();
 }
 
-class _CustomizableMultiselectFieldState extends FormFieldState<List<List<dynamic>>> {
-
+class _CustomizableMultiselectFieldState
+    extends FormFieldState<List<List<dynamic>>> {
   @override
-  CustomizableMultiselectField get widget => super.widget as CustomizableMultiselectField;
-
-
+  CustomizableMultiselectField get widget =>
+      super.widget as CustomizableMultiselectField;
 }

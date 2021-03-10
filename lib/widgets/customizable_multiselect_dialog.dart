@@ -8,21 +8,22 @@ class CustomizableMultiselectDialog<V> extends StatefulWidget {
     Key? key,
     required this.dataSourceList,
     required this.customizableMultiselectDialogOptions,
-    required this.selectedValues, 
+    required this.selectedValues,
   }) : super(key: key);
 
   final List<DataSource> dataSourceList;
-  final CustomizableMultiselectDialogOptions customizableMultiselectDialogOptions;
+  final CustomizableMultiselectDialogOptions
+      customizableMultiselectDialogOptions;
   final List<List<V>?>? selectedValues;
 
   @override
-  State<StatefulWidget> createState() => _CustomizableMultiselectDialogState<V>();
-
+  State<StatefulWidget> createState() =>
+      _CustomizableMultiselectDialogState<V>();
 }
 
-class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultiselectDialog<V>> {
-  
-  List<List<V>>_selectedValues = [];
+class _CustomizableMultiselectDialogState<V>
+    extends State<CustomizableMultiselectDialog<V>> {
+  List<List<V>> _selectedValues = [];
   String _filterText = "";
 
   void initState() {
@@ -57,93 +58,102 @@ class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultisele
   }
 
   Widget _searchBar() => Padding(
-    padding: EdgeInsets.all(16),
-    child: TextField(
-      decoration: widget.customizableMultiselectDialogOptions.searchBarDecoration ?? InputDecoration(
-        contentPadding: const EdgeInsets.all(8.0),
-        prefixIcon: Icon(Icons.search),
-        focusedBorder: new OutlineInputBorder(
-          borderRadius:BorderRadius.circular(50.0),
-          borderSide: new BorderSide(
-            color: Colors.blue,
-          )
+      padding: EdgeInsets.all(16),
+      child: TextField(
+        decoration:
+            widget.customizableMultiselectDialogOptions.searchBarDecoration ??
+                InputDecoration(
+                  contentPadding: const EdgeInsets.all(8.0),
+                  prefixIcon: Icon(Icons.search),
+                  focusedBorder: new OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                      borderSide: new BorderSide(
+                        color: Colors.blue,
+                      )),
+                  border: new OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                      borderSide: new BorderSide(color: Colors.blue)),
+                  hintText: 'Search...',
+                ),
+        style: TextStyle(
+          fontSize: 16.0,
+          fontFamily: "Hind",
+          decoration: TextDecoration.none,
         ),
-        border: new OutlineInputBorder(
-          borderRadius:BorderRadius.circular(50.0),
-          borderSide: new BorderSide(
-            color: Colors.blue
-          )
-        ),
-        hintText: 'Search...',
-      ),
-      style: TextStyle(
-        fontSize: 16.0,
-        fontFamily: "Hind",
-        decoration: TextDecoration.none,
-      ),
-      onChanged: (value) => filterSearchResults(value),
-    )
-  );
+        onChanged: (value) => filterSearchResults(value),
+      ));
 
-
-  Widget _buildDataSourceTiles( DataSource dataSource, int dataSourceIndex, Widget? Function(Map<String, dynamic> value, String labelKey, String valueKey, int dataSourceIndex) builderTile) {
-    final List<Widget> itemList = List.castFrom(dataSource.dataList.map((Map<String, dynamic> value) => builderTile(
-      value,
-      dataSource.options.labelKey,
-      dataSource.options.valueKey,
-      dataSourceIndex
-    )).toList()..removeWhere((value) => value == null));
+  Widget _buildDataSourceTiles(
+      DataSource dataSource,
+      int dataSourceIndex,
+      Widget? Function(Map<String, dynamic> value, String labelKey,
+              String valueKey, int dataSourceIndex)
+          builderTile) {
+    final List<Widget> itemList = List.castFrom(dataSource.dataList
+        .map((Map<String, dynamic> value) => builderTile(
+            value,
+            dataSource.options.labelKey,
+            dataSource.options.valueKey,
+            dataSourceIndex))
+        .toList()
+          ..removeWhere((value) => value == null));
     return Column(
       children: [
         (dataSource.options.title != null)
-         ? Padding(
-           padding: const EdgeInsets.all(16.0),
-           child: Row(
-             children: [
-               Expanded(child: dataSource.options.title!),
-             ],
-           ),
-         )
-         : Divider(),
+            ? Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Expanded(child: dataSource.options.title!),
+                  ],
+                ),
+              )
+            : Divider(),
         (itemList.isNotEmpty)
-        ? Column(
-          children: itemList,
-        )
-        : Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(child: dataSource.options.noItensFoundText ?? Text('no Itens found!')),
-        ),
+            ? Column(
+                children: itemList,
+              )
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    child: dataSource.options.noItensFoundText ??
+                        Text('no Itens found!')),
+              ),
       ],
     );
   }
 
-  Widget _buildItens(Map<String, dynamic> value, String labelKey, String valueKey, int dataSourceIndex) {
+  Widget _buildItens(Map<String, dynamic> value, String labelKey,
+      String valueKey, int dataSourceIndex) {
     return CheckboxListTile(
       value: _selectedValues[dataSourceIndex].contains(value[valueKey]),
       title: Text(value[labelKey].toString()),
       controlAffinity: ListTileControlAffinity.leading,
       onChanged: (checked) {
-          if(checked != null) {
-            _onItemCheckedChange(value[valueKey], checked, dataSourceIndex);
-          }
-        },
+        if (checked != null) {
+          _onItemCheckedChange(value[valueKey], checked, dataSourceIndex);
+        }
+      },
     );
   }
 
-
-  Widget? _buildItensWithFilter(Map<String, dynamic> value, String labelKey, String valueKey, int dataSourceIndex) {
-     return value[labelKey].toString().toLowerCase().contains(_filterText.toLowerCase()) 
-     ? CheckboxListTile(
-        value: _selectedValues[dataSourceIndex].contains(value[valueKey]),
-        title: Text(value[labelKey].toString()),
-        controlAffinity: ListTileControlAffinity.leading,
-        onChanged: (checked) {
-          if(checked != null) {
-            _onItemCheckedChange(value[valueKey], checked, dataSourceIndex);
-          }
-        },
-      )
-     : null;
+  Widget? _buildItensWithFilter(Map<String, dynamic> value, String labelKey,
+      String valueKey, int dataSourceIndex) {
+    return value[labelKey]
+            .toString()
+            .toLowerCase()
+            .contains(_filterText.toLowerCase())
+        ? CheckboxListTile(
+            value: _selectedValues[dataSourceIndex].contains(value[valueKey]),
+            title: Text(value[labelKey].toString()),
+            controlAffinity: ListTileControlAffinity.leading,
+            onChanged: (checked) {
+              if (checked != null) {
+                _onItemCheckedChange(value[valueKey], checked, dataSourceIndex);
+              }
+            },
+          )
+        : null;
   }
 
   @override
@@ -157,22 +167,22 @@ class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultisele
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (widget.customizableMultiselectDialogOptions.enableSearchBar) 
+            if (widget.customizableMultiselectDialogOptions.enableSearchBar)
               _searchBar(),
             Expanded(
               child: SingleChildScrollView(
                 child: ListTileTheme(
-                  contentPadding: EdgeInsets.fromLTRB(14.0, 0.0, 24.0, 0.0),
-                  child: ListBody(
-                    children: widget.dataSourceList.mapIndex((DataSource dataSource, int index) =>
-                      _buildDataSourceTiles(
-                        dataSource,
-                        index,
-                        _filterText == "" ? _buildItens : _buildItensWithFilter
-                      )
-                    ).toList()
-                )
-                ),
+                    contentPadding: EdgeInsets.fromLTRB(14.0, 0.0, 24.0, 0.0),
+                    child: ListBody(
+                        children: widget.dataSourceList
+                            .mapIndex((DataSource dataSource, int index) =>
+                                _buildDataSourceTiles(
+                                    dataSource,
+                                    index,
+                                    _filterText == ""
+                                        ? _buildItens
+                                        : _buildItensWithFilter))
+                            .toList())),
               ),
             ),
           ],
@@ -180,11 +190,13 @@ class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultisele
       ),
       actions: <Widget>[
         TextButton(
-          child: Text(widget.customizableMultiselectDialogOptions.cancelButtonLabel),
+          child: Text(
+              widget.customizableMultiselectDialogOptions.cancelButtonLabel),
           onPressed: _onCancelTap,
         ),
         TextButton(
-          child: Text(widget.customizableMultiselectDialogOptions.okButtonLabel),
+          child:
+              Text(widget.customizableMultiselectDialogOptions.okButtonLabel),
           onPressed: _onSubmitTap,
         )
       ],

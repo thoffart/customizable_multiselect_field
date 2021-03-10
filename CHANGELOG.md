@@ -1,4 +1,8 @@
 
+## [1.0.1] - 10/03/2021
+
+  * small fixes.
+
 ## [1.0.0] - 10/03/2021
 
   * Adding null safety support.
