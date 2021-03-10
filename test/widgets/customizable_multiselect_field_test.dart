@@ -104,7 +104,7 @@ void main() {
 
     await tester.tap(
       find.byWidgetPredicate((widget) =>
-        widget is FlatButton && (widget.child as Text).data == 'Ok'
+        widget is TextButton && (widget.child as Text).data == 'Ok'
       )
     );
 
@@ -142,7 +142,7 @@ void main() {
 
     await tester.tap(
       find.byWidgetPredicate((widget) =>
-        widget is FlatButton && (widget.child as Text).data == 'Ok'
+        widget is TextButton && (widget.child as Text).data == 'Ok'
       )
     );
 

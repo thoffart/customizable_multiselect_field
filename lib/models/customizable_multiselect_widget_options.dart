@@ -16,9 +16,9 @@ class CustomizableMultiselectWidgetOptions {
   final Color chipColor;
 
   /// A [ShapeBorder] widget that will be the shape of the [Chip].
-  final ShapeBorder chipShape;
+  final ShapeBorder? chipShape;
   
   /// A [Text] widget that will appear if no value was selected.
-  final Text hintText;
+  final Text? hintText;
 
 }

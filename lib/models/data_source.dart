@@ -1,13 +1,12 @@
 import 'package:customizable_multiselect_field/models/data_source_options.dart';
-import 'package:flutter/material.dart';
 
 
 class DataSource<T> {
 
   DataSource({
-    @required this.dataList, 
-    @required this.options, 
-    @required this.valueList, 
+    required this.dataList, 
+    required this.options, 
+    this.valueList = const [], 
   });
   
   /// A map list that contains the label and the value of the checkbox data.

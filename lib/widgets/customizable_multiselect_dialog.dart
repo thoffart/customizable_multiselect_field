@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 
 class CustomizableMultiselectDialog<V> extends StatefulWidget {
   CustomizableMultiselectDialog({
-    Key key,
-    @required this.dataSourceList,
-    @required this.customizableMultiselectDialogOptions,
-    @required this.selectedValues, 
+    Key? key,
+    required this.dataSourceList,
+    required this.customizableMultiselectDialogOptions,
+    required this.selectedValues, 
   }) : super(key: key);
 
   final List<DataSource> dataSourceList;
   final CustomizableMultiselectDialogOptions customizableMultiselectDialogOptions;
-  final List<List<V>> selectedValues;
+  final List<List<V>?>? selectedValues;
 
   @override
   State<StatefulWidget> createState() => _CustomizableMultiselectDialogState<V>();
@@ -22,19 +22,19 @@ class CustomizableMultiselectDialog<V> extends StatefulWidget {
 
 class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultiselectDialog<V>> {
   
-  List<List<V>>_selectedValues = List<List<V>>();
-  String _filterText;
+  List<List<V>>_selectedValues = [];
+  String _filterText = "";
 
   void initState() {
     super.initState();
-    widget.selectedValues.forEach((element) {
-      _selectedValues.add(List.from(element));
+    widget.selectedValues!.forEach((element) {
+      _selectedValues.add(List.from(element!));
     });
   }
 
-  void _onItemCheckedChange(V itemValue, bool checked, int index) {
+  void _onItemCheckedChange(V itemValue, bool? checked, int index) {
     setState(() {
-      if (checked) {
+      if (checked!) {
         _selectedValues[index].add(itemValue);
       } else {
         _selectedValues[index].remove(itemValue);
@@ -86,7 +86,7 @@ class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultisele
   );
 
 
-  Widget _buildDataSourceTiles( DataSource dataSource, int dataSourceIndex, Widget Function(Map<String, dynamic> value, String labelKey, String valueKey, int dataSourceIndex) builderTile) {
+  Widget _buildDataSourceTiles( DataSource dataSource, int dataSourceIndex, Widget? Function(Map<String, dynamic> value, String? labelKey, String? valueKey, int dataSourceIndex) builderTile) {
     final itemList = dataSource.dataList.map((Map<String, dynamic> value) => builderTile(
       value,
       dataSource.options.labelKey,
@@ -100,14 +100,14 @@ class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultisele
            padding: const EdgeInsets.all(16.0),
            child: Row(
              children: [
-               Expanded(child: dataSource.options.title),
+               Expanded(child: dataSource.options.title!),
              ],
            ),
          )
          : Divider(),
         (itemList.isNotEmpty)
         ? Column(
-          children: itemList,
+          children: itemList as List<Widget>,
         )
         : Padding(
           padding: const EdgeInsets.all(8.0),
@@ -117,20 +117,20 @@ class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultisele
     );
   }
 
-  Widget _buildItens(Map<String, dynamic> value, String labelKey, String valueKey, int dataSourceIndex) {
+  Widget _buildItens(Map<String, dynamic> value, String? labelKey, String? valueKey, int dataSourceIndex) {
     return CheckboxListTile(
-      value: _selectedValues[dataSourceIndex].contains(value[valueKey]),
-      title: Text(value[labelKey].toString()),
+      value: _selectedValues[dataSourceIndex].contains(value[valueKey!]),
+      title: Text(value[labelKey!].toString()),
       controlAffinity: ListTileControlAffinity.leading,
       onChanged: (checked) => _onItemCheckedChange(value[valueKey], checked, dataSourceIndex),
     );
   }
 
 
-  Widget _buildItensWithFilter(Map<String, dynamic> value, String labelKey, String valueKey, int dataSourceIndex) {
-     return value[labelKey].toString().toLowerCase().contains(_filterText.toLowerCase()) 
+  Widget? _buildItensWithFilter(Map<String, dynamic> value, String? labelKey, String? valueKey, int dataSourceIndex) {
+     return value[labelKey!].toString().toLowerCase().contains(_filterText.toLowerCase()) 
      ? CheckboxListTile(
-        value: _selectedValues[dataSourceIndex].contains(value[valueKey]),
+        value: _selectedValues[dataSourceIndex].contains(value[valueKey!]),
         title: Text(value[labelKey].toString()),
         controlAffinity: ListTileControlAffinity.leading,
         onChanged: (checked) => _onItemCheckedChange(value[valueKey], checked, dataSourceIndex),
@@ -160,7 +160,7 @@ class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultisele
                       _buildDataSourceTiles(
                         dataSource,
                         index,
-                        (_filterText == null || _filterText == "") ? _buildItens : _buildItensWithFilter
+                        _filterText == "" ? _buildItens : _buildItensWithFilter
                       )
                     ).toList()
                 )
@@ -171,11 +171,11 @@ class _CustomizableMultiselectDialogState<V> extends State<CustomizableMultisele
         ),
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           child: Text(widget.customizableMultiselectDialogOptions.cancelButtonLabel),
           onPressed: _onCancelTap,
         ),
-        FlatButton(
+        TextButton(
           child: Text(widget.customizableMultiselectDialogOptions.okButtonLabel),
           onPressed: _onSubmitTap,
         )

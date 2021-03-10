@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:customizable_multiselect_field/models/customizable_multiselect_dialog_options.dart';
 import 'package:customizable_multiselect_field/models/customizable_multiselect_widget_options.dart';
 import 'package:customizable_multiselect_field/models/data_source.dart';
@@ -8,13 +9,13 @@ import 'package:flutter/material.dart';
 class CustomizableMultiselectWidget extends StatefulWidget {
 
   const CustomizableMultiselectWidget({
-    Key key,
-    @required this.dataSourceList,
-    @required this.customizableMultiselectDialogOptions,
-    @required this.customizableMultiselectWidgetOptions,
-    @required this.decoration,
-    @required this.onChanged,
-    @required this.value
+    Key? key,
+    required this.dataSourceList,
+    required this.customizableMultiselectDialogOptions,
+    required this.customizableMultiselectWidgetOptions,
+    required this.decoration,
+    required this.onChanged,
+    required this.value
   }) : super(key: key);
 
   final List<DataSource> dataSourceList;
@@ -22,7 +23,7 @@ class CustomizableMultiselectWidget extends StatefulWidget {
   final CustomizableMultiselectWidgetOptions customizableMultiselectWidgetOptions;
   final InputDecoration decoration;
   final ValueChanged<List<List<dynamic>>> onChanged;
-  final List<List<dynamic>> value;
+  final List<List<dynamic>?>? value;
 
   @override
   _CustomizableMultiselectWidgetState createState() => _CustomizableMultiselectWidgetState();
@@ -31,13 +32,13 @@ class CustomizableMultiselectWidget extends StatefulWidget {
 
 class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectWidget> {
 
-  List<Widget> _buildListChip(DataSource dataSource, int index) => widget.value[index]
-    .map((value) => dataSource.dataList.singleWhere((data) => data[dataSource.options.valueKey] == value,orElse: () => null))
+  List<Widget> _buildListChip(DataSource dataSource, int index) => widget.value![index]!
+    .map((value) => dataSource.dataList.singleWhereOrNull((data) => data[dataSource.options.valueKey] == value))
     .map((value) => (value != null)
       ? Chip(
         label: Text(value[dataSource.options.labelKey].toString(), overflow: TextOverflow.ellipsis),
         backgroundColor: widget.customizableMultiselectWidgetOptions.chipColor,
-        shape: widget.customizableMultiselectWidgetOptions.chipShape ?? RoundedRectangleBorder(
+        shape: widget.customizableMultiselectWidgetOptions.chipShape as OutlinedBorder? ?? RoundedRectangleBorder(
           side: BorderSide(color: Colors.blue, width: 1),
           borderRadius: BorderRadius.circular(40.0),
         ),
@@ -46,7 +47,7 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
   .toList();
 
   bool _checkIfAllDataSourceIsEmpty() {
-    return widget.value.every((List value) => value.isEmpty);
+    return widget.value!.every((List? value) => value!.isEmpty);
   }
 
 
@@ -56,12 +57,12 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
       .applyDefaults(themeData.inputDecorationTheme)
       .copyWith(
         enabled: widget.customizableMultiselectWidgetOptions.enable,
-        hintMaxLines: widget.decoration?.hintMaxLines,
+        hintMaxLines: widget.decoration.hintMaxLines,
       );
     return effectiveDecoration.copyWith(
       errorText: effectiveDecoration.errorText ?? '',
       counterStyle: effectiveDecoration.errorStyle
-        ?? themeData.textTheme.caption.copyWith(color: themeData.errorColor),
+        ?? themeData.textTheme.caption!.copyWith(color: themeData.errorColor),
     );
   }
 
@@ -70,7 +71,7 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
     return InkWell(
       onTap: () async {
         if(widget.customizableMultiselectWidgetOptions.enable) {
-          final List newSelectedValues = await showDialog<List>(
+          final List? newSelectedValues = await showDialog<List>(
             context: context,
             builder: (BuildContext context) {
               return CustomizableMultiselectDialog(
@@ -81,7 +82,7 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
             },
           );
           if(newSelectedValues != null) {
-            widget.onChanged(newSelectedValues);
+            widget.onChanged(newSelectedValues as List<List<dynamic>>);
           }
         }
       },
@@ -91,7 +92,7 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
             ? Column(
                 children: <Widget>[
                   ...widget.dataSourceList.mapIndex(
-                    (DataSource dataSource, int index) => (widget.value[index].isNotEmpty)
+                    (DataSource dataSource, int index) => (widget.value![index]!.isNotEmpty)
                     ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -100,7 +101,7 @@ class _CustomizableMultiselectWidgetState extends State<CustomizableMultiselectW
                             ? Row(
                               children: [
                                 Expanded(
-                                  child: dataSource.options.title
+                                  child: dataSource.options.title!
                                 ),
                               ],
                             )

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class DataSourceOptions {
 
   DataSourceOptions({
-    @required this.valueKey, 
-    @required this.labelKey,
+    required this.valueKey, 
+    required this.labelKey,
     this.title,
     this.noItensFoundText,
   });
@@ -14,9 +14,9 @@ class DataSourceOptions {
   /// A string that define the key to access the label of the [DataSource.dataList].
   final String labelKey;
   /// A [Text] widget that will be the title of the section this data inside the [AlertDialog].
-  final Text title;
+  final Text? title;
   /// A [Text] widget that will be the text if no itens was found while occuring a search inside the [AlertDialog].
-  final Text noItensFoundText;
+  final Text? noItensFoundText;
 
   DataSourceOptions.fromJson(Map<String, dynamic> json)
     : valueKey = json['valueKey'],

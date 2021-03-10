@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -34,13 +34,13 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<int> sectorWithoutFoodListValue = [];
   final vegetablesListValue = ['Broccoli'];
   final noTitleListValue = ['No title'];
-  List<List<dynamic>> valueList;
+  List<List<dynamic>?>? valueList;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: Center(
         child: Form(
@@ -138,14 +138,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       valueList: noTitleListValue,
                     ),
                   ],
-                  onChanged: ((List<List<dynamic>> value) => print(value)),
-                  onSaved: ((List<List<dynamic>> newValueList) {
+                  onChanged: ((List<List<dynamic>?> value) => print(value)),
+                  onSaved: ((List<List<dynamic>?>? newValueList) {
                     setState(() {
                       valueList = newValueList;
                     });
                   }),
-                  validator: ((List<List<dynamic>> value) {
-                    if(value.every((element) => element.isEmpty))
+                  validator: ((List<List<dynamic>?>? value) {
+                    if(value!.every((element) => element!.isEmpty))
                       return 'Please Select a value!';
                     return null;
 
@@ -153,10 +153,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               SizedBox(height: 16,),
-              RaisedButton(
+              TextButton(
                 onPressed: () {
-                  if(_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
+                  if(_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
                   }
                 },
                 child: Text('Save'),

@@ -51,13 +51,13 @@ import 'customizable_multiselect_widget.dart';
 class CustomizableMultiselectField extends FormField<List<List<dynamic>>> {
 
   CustomizableMultiselectField({
-    Key key,
-    FormFieldSetter<List<List<dynamic>>> onSaved,
-    FormFieldValidator<List<List<dynamic>>> validator,
-    bool autovalidate = false,
-    ValueChanged<List<List<dynamic>>> onChanged,
-    InputDecoration decoration,
-    @required this.dataSourceList,
+    Key? key,
+    FormFieldSetter<List<List<dynamic>>>? onSaved,
+    FormFieldValidator<List<List<dynamic>>>? validator,
+    AutovalidateMode autovalidateMode = AutovalidateMode.disabled,
+    ValueChanged<List<List<dynamic>>>? onChanged,
+    InputDecoration? decoration,
+    required this.dataSourceList,
     this.customizableMultiselectDialogOptions = const CustomizableMultiselectDialogOptions(),
     this.customizableMultiselectWidgetOptions = const CustomizableMultiselectWidgetOptions(),
   }) : super(
@@ -65,7 +65,7 @@ class CustomizableMultiselectField extends FormField<List<List<dynamic>>> {
     onSaved: onSaved,
     validator: validator,
     initialValue: dataSourceList.map((DataSource dataSource) => dataSource.valueList).toList(),
-    autovalidate: autovalidate,
+    autovalidateMode: autovalidateMode,
     enabled: customizableMultiselectWidgetOptions.enable,
     builder: (FormFieldState<List<List<dynamic>>> field) {
       final InputDecoration effectiveDecoration = (decoration ?? const InputDecoration())
